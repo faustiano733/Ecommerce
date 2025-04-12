@@ -2,25 +2,13 @@ import { Sequelize } from "sequelize";
 import pg from "pg";
 import module from "mysql2";
 
-let sequelize = null
-if(process.env.NODE_ENV ==='production'){
-  sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: "postgress",
-    dialectModule: pg,
-    dialectOptions: {
-      charset: "utf8",
-    },
-  });
-}else if(process.env.NODE_ENV === 'development'){
-  sequelize = new Sequelize(process.env.DATABASE_NAME, process.env.DATABASE_USER,process.env.DATABASE_PASSWORD,{
-    dialect: "mysql",
+const sequelize  = new Sequelize(process.env.DATABASE_URL, {
+    dialect: process.env.DATABASE_DIALECT,
     dialectModule: module,
     dialectOptions: {
       charset: "utf8",
     },
   });
-}
-
 
 
 const db = {
